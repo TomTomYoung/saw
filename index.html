@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#151b19"><title>SAW — 旧館探索</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead"><div class="identity"><span class="wordmark">SAW<span class="brand-dot">.</span></span><span class="edition">EXPLORATION STUDY<br><span>旧館探索 / 基盤試作</span></span></div><nav><a href="doc/">仕様書</a><button id="helpButton" aria-expanded="false">操作方法 <span>?</span></button></nav></header>
+    <section id="help" class="help" hidden><p>矢印キー / W・A・S・D：前後移動・左右旋回。Shift＋←→ / A・D、またはQ・E：横移動。</p><p>詳細調査：Iキー、または「詳細調べる」。カーソルを合わせて左クリックで調査。右クリックは対応設備の補足調査。Escで探索へ戻ります。文章表示中はEnter / Space / 「閉じる」で続きを表示します。</p><p>H：操作パネル表示切替。F2：開発情報。タッチ操作にも対応しています。探索位置と設備状態はこのブラウザーへ自動保存されます。</p></section>
+    <main>
+      <div class="floor-heading"><div><span class="eyebrow">ABANDONED OFFICE BUILDING</span><h1>旧館 <span>第一層</span></h1></div><div class="floor-marker">01<span>FLOOR</span></div></div>
+      <div class="workspace">
+        <section class="scene-section" aria-label="探索画面">
+          <div class="scene-topline"><span id="zoneName">読み込み中</span><span id="position">—</span></div>
+          <div class="scene" id="scene">
+            <canvas id="dungeon" width="800" height="400" tabindex="0" aria-label="一人称の探索画面。詳細調査モードで設備をクリックできます。"></canvas>
+            <div class="scene-label"><span id="modeDot"></span><span id="modeName">探索モード</span></div>
+            <button id="hideUI" class="scene-button" aria-pressed="false">パネルを隠す <kbd>H</kbd></button>
+            <div id="focusMarker" class="focus-marker" hidden></div>
+            <div id="cursorLabel" class="cursor-label" hidden></div>
+            <div class="scene-bottom"><span id="sceneInstruction">矢印キーで移動・旋回</span><button id="exitInspect" hidden>探索へ戻る <kbd>Esc</kbd></button></div>
+            <section id="message" class="message" role="dialog" aria-modal="true" aria-labelledby="messageTitle" aria-describedby="messageText" hidden><span class="eyebrow">OBSERVATION</span><h2 id="messageTitle"></h2><p id="messageText"></p><button id="advance">閉じる <span>↵</span></button></section>
+          </div>
+          <div id="hint" class="hint" role="status" aria-live="polite">ビルの周囲を探索できます。</div>
+        </section>
+        <aside class="rail panels">
+          <section class="map-card"><div class="card-title"><h2>フロアマップ</h2><span>01 / F</span></div><canvas id="map" width="260" height="240" aria-label="歩いた場所と現在地を示す地図"></canvas><div class="map-legend"><span><i></i>現在地</span><span>未踏区画は探索で表示</span></div></section>
+          <section class="field-note"><span class="eyebrow">FIELD NOTE</span><p>低い天井。剥がれた塗装。<br>静かなビルに、古い設備だけが残っています。</p><div class="note-rule"></div><span class="small">歩く → 向きを変える → 詳細調べる</span></section>
+        </aside>
+        <section class="control-card panels"><div class="card-title"><h2>探索操作</h2><span id="controlState">MOVE</span></div><div class="controls"><div class="dpad"><button data-move="strafe_left" title="左へ横移動 Q / Shift＋←">⇤<small>横移動</small></button><button data-move="forward">↑<small>前へ</small></button><button data-move="strafe_right" title="右へ横移動 E / Shift＋→">⇥<small>横移動</small></button><button data-move="left">↶<small>左を向く</small></button><button data-move="back">↓<small>後ろへ</small></button><button data-move="right">↷<small>右を向く</small></button></div><div class="inspect-actions"><button id="inspectButton" class="primary">詳細調べる <kbd>I</kbd></button><p id="inspectHelp">画面の中の設備を<br>カーソルで調べます。</p><details id="targetList"><summary>キーボードで調査箇所を選ぶ</summary><div id="accessibleTargets"></div></details></div></div></section>
+        <section class="record-card panels"><div class="card-title"><h2>探索記録</h2><span>LOG</span></div><ol id="log"></ol><div class="save-line"><span id="saveStatus">保存待機</span><button id="resetButton">最初から探索</button></div><div id="resetConfirm" hidden><p>探索位置と設備の状態を初期化しますか？</p><button id="resetYes">初期化する</button><button id="resetNo">やめる</button></div></section>
+      </div>
+      <section id="debug" hidden><h2>開発情報 / F2</h2><pre id="debugText"></pre></section>
+      <p id="fatal" role="alert" hidden></p>
+    </main>
+    <footer><span>SAW / EXPLORATION PROTOTYPE</span><span>移動・調査・イベント応答の試作です。シナリオ・謎解きは未実装です。</span></footer>
+  </div>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "old_building_f1",
+  "name": "旧館 1階",
+  "description": "使われなくなった事務所ビル。低い天井、煤けた塗装壁、古い設備が残っています。",
+  "tiles": ["#############", "#...#...#...#", "#...#.......#", "#...#...#...#", "##.###.###.##", "#...........#", "#.####.####.#", "#....#.#....#", "#....#.#....#", "#....#.#....#", "######.######", "#############"],
+  "start": {"x": 6, "y": 9, "facing": "north"},
+  "flags": {"power": false},
+  "materials": {
+    "wall": {"url": "assets/textures/building-atlas.png", "rect": {"x": 0, "y": 0, "width": 0.5, "height": 0.5}},
+    "floor": {"url": "assets/textures/building-atlas.png", "rect": {"x": 0.5, "y": 0, "width": 0.5, "height": 0.5}},
+    "ceiling": {"url": "assets/textures/building-atlas.png", "rect": {"x": 0, "y": 0.5, "width": 0.5, "height": 0.5}}
+  },
+  "zones": [
+    {"name": "南側通路", "rect": [6, 6, 1, 5]},
+    {"name": "中央廊下", "rect": [1, 5, 11, 1]},
+    {"name": "管理室", "rect": [5, 1, 3, 4]},
+    {"name": "西側事務室", "rect": [1, 1, 3, 4]},
+    {"name": "東側事務室", "rect": [9, 1, 3, 4]},
+    {"name": "西側倉庫", "rect": [1, 6, 4, 4]},
+    {"name": "東側倉庫", "rect": [8, 6, 4, 4]}
+  ],
+  "targets": [
+    {
+      "id": "power_panel", "label": "古い配電盤", "wall": {"x": 6, "y": 8, "side": "east"},
+      "rect": {"x": 0.34, "y": 0.34, "width": 0.32, "height": 0.32}, "reach": 2.6,
+      "art": {"default": "assets/fixtures/power-panel.svg", "on": "assets/fixtures/power-panel-on.svg"},
+      "events": {
+        "pointerenter": [{"id": "hover", "actions": [{"op": "hint", "text": "古い配電盤 ─ クリックで試験スイッチを操作"}]}],
+        "click": [
+          {"id": "off", "when": {"power": true}, "actions": [{"op": "flag.set", "key": "power", "value": false}, {"op": "appearance.set", "target": "power_panel", "value": "default"}, {"op": "message", "title": "古い配電盤", "text": "スイッチを戻しました。小さな表示灯が消えています。"}]},
+          {"id": "on", "actions": [{"op": "flag.set", "key": "power", "value": true}, {"op": "appearance.set", "target": "power_panel", "value": "on"}, {"op": "message", "title": "古い配電盤", "text": "スイッチを入れました。表示灯が鈍く点灯しています。"}]}
+        ],
+        "contextmenu": [{"id": "examine", "actions": [{"op": "message", "title": "古い配電盤", "text": "塗装が剥げた金属の箱です。盤面には古い計器とスイッチが並んでいます。"}]}]
+      }
+    },
+    {"id": "entrance_notice", "label": "掲示板", "wall": {"x": 6, "y": 9, "side": "west"}, "rect": {"x": 0.18, "y": 0.22, "width": 0.64, "height": 0.56}, "art": {"default": "assets/fixtures/notice-board.svg"}, "events": {"click": [{"id": "read", "actions": [{"op": "message", "title": "掲示板", "text": "日に焼けた掲示物が重なっています。紙の端が丸まり、画鋲にも錆が浮いています。"}]}]}},
+    {"id": "intercom", "label": "壁のインターホン", "wall": {"x": 6, "y": 7, "side": "west"}, "rect": {"x": 0.35, "y": 0.28, "width": 0.3, "height": 0.4}, "art": {"default": "assets/fixtures/intercom.svg"}, "events": {"pointerdown": [{"id": "press", "actions": [{"op": "hint", "text": "呼び出しボタンを押しています。"}]}], "pointerup": [{"id": "release", "actions": [{"op": "hint", "text": "呼び出しボタンから指を離しました。"}]}], "click": [{"id": "call", "actions": [{"op": "message", "title": "インターホン", "text": "ボタンを押すと、スピーカーから小さな雑音が聞こえます。応答はありません。"}]}]}},
+    {"id": "corridor_sign", "label": "古い誘導標識", "wall": {"x": 7, "y": 5, "side": "north"}, "rect": {"x": 0.3, "y": 0.08, "width": 0.4, "height": 0.3}, "art": {"default": "assets/fixtures/exit-sign.svg"}, "events": {"click": [{"id": "look", "actions": [{"op": "message", "title": "誘導標識", "text": "古い誘導標識です。樹脂のカバーが黄ばんでいます。"}]}]}},
+    {"id": "staff_door", "label": "管理室の鉄扉", "wall": {"x": 6, "y": 1, "side": "north"}, "rect": {"x": 0.1, "y": 0.03, "width": 0.8, "height": 0.97}, "art": {"default": "assets/fixtures/steel-door.svg"}, "events": {"click": [{"id": "examine", "actions": [{"op": "message", "title": "管理室の鉄扉", "text": "重い鉄の扉です。取っ手の周囲だけ塗装が擦れています。この試作では扉の先は未実装です。"}]}]}},
+    {"id": "office_window", "label": "曇りガラスの窓", "wall": {"x": 2, "y": 1, "side": "north"}, "rect": {"x": 0.05, "y": 0.1, "width": 0.9, "height": 0.65}, "art": {"default": "assets/fixtures/window.svg"}, "events": {"click": [{"id": "look", "actions": [{"op": "message", "title": "曇りガラスの窓", "text": "汚れた曇りガラスです。外の光は届いていますが、向こう側の様子は分かりません。"}]}]}},
+    {"id": "east_window", "label": "東側の窓", "wall": {"x": 10, "y": 1, "side": "north"}, "rect": {"x": 0.05, "y": 0.1, "width": 0.9, "height": 0.65}, "art": {"default": "assets/fixtures/window.svg"}, "events": {"click": [{"id": "look", "actions": [{"op": "message", "title": "東側の窓", "text": "古いアルミ枠の窓です。ゴムの縁が硬化し、隅に埃が溜まっています。"}]}]}},
+    {"id": "storage_vent", "label": "倉庫の換気口", "wall": {"x": 3, "y": 9, "side": "south"}, "rect": {"x": 0.2, "y": 0.2, "width": 0.6, "height": 0.5}, "art": {"default": "assets/fixtures/vent.svg"}, "events": {"click": [{"id": "look", "actions": [{"op": "message", "title": "換気口", "text": "羽根の隙間に埃が溜まっています。奥から弱い空気の流れを感じます。"}]}]}},
+    {"id": "east_notice", "label": "倉庫の掲示物", "wall": {"x": 10, "y": 9, "side": "south"}, "rect": {"x": 0.22, "y": 0.2, "width": 0.56, "height": 0.55}, "art": {"default": "assets/fixtures/notice-board.svg"}, "events": {"click": [{"id": "look", "actions": [{"op": "message", "title": "倉庫の掲示物", "text": "掲示板の表面が湿気で波打っています。紙の内容はほとんど読めません。"}]}]}}
+  ]
+}
